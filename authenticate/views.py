@@ -25,7 +25,17 @@ def register_user(request):
 
 # Login
 def login_user(request):
-    return HttpResponse('login')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Login successful! Welcome back.')
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid username or password. Please try again.')
+    return render(request, 'login.html', {})
 
 # Logout
 def logout_user(request):

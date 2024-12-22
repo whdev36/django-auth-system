@@ -1,5 +1,17 @@
-<form action="#" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Register</button>
-</form>
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form action="#" method="post">
+                <h1 class="mb-5">Register</h1>
+                {% csrf_token %}
+                {{ form }}
+                <button class="btn btn-primary w-100 mb-3" type="submit">Register</button>
+                <p class="text-center">Do you have an account? <a href="{% url 'login' %}">Login</a></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

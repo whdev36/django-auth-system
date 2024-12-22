@@ -67,6 +67,6 @@ class RegisterUser(UserCreationForm):
     def as_div(self):
         output = []
         for field in self:
-            output.append(f'<div>{field.label_tag()}{field}</div>')
+            output.append(f'<div class="mb-3">{field.label_tag()}{field}</div>')
         return mark_safe('\n'.join(output))
 
