@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ u.username }}'s Profile{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h3>{{ u.first_name }} {{ u.last_name }}</h3>
+            <p><strong>Username:</strong> {{ u.username }}</p>
+            <p><strong>Email:</strong> {{ u.email }}</p>
+            <p><strong>Joined on:</strong> {{ u.date_joined|date:"F j, Y" }}</p>
+
+            {% if u.profile_picture %}
+                <div class="my-3">
+                    <img src="{{ u.profile_picture.url }}" alt="{{ u.username }}'s profile picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                </div>
+            {% else %}
+                <div class="my-3">
+                    <img src="{% static 'user.png' %}" alt="Default profile picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

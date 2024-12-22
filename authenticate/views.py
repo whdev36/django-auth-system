@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from . import forms
+from django.db.models import Q
 
 # Home
 def home(request):
@@ -86,3 +87,16 @@ def delete_profile(request):
     else:
         messages.warning(request, 'You need to be logged in to delete your profile.')
         return redirect('login')
+
+# Search user
+def search(request):
+    q = request.GET.get('q', '')
+    users = User.objects.none()
+    if q and q != '':
+        users = User.objects.filter(Q(username__icontains=q) | Q(email__icontains=q) |
+                                    Q(first_name__icontains=q) | Q(last_name__icontains=q))
+    return render(request, 'search.html', {'users': users})
+
+def user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    return render(request, 'user.html', {'u': user})

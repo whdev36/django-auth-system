@@ -11,6 +11,7 @@
         <div class="collapse navbar-collapse" id="menu-toggle">
             <div class="navbar-nav">
                 <a class="nav-link" href="{% url 'home' %}">Home</a>
+                <a class="nav-link" href="{% url 'search' %}">Search</a>
                 {% if not user.is_authenticated %}
                     <a class="nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-link" href="{% url 'register' %}">Register</a>
