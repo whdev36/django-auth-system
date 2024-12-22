@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from . import models, forms
+from django.contrib.auth.decorators import login_required
 
 # Home
 def home(request):
@@ -48,12 +49,24 @@ def logout_user(request):
 
 # Profile
 def profile(request):
-    user = request.user
-    return render(request, 'profile.html', {'u': user})
+    if request.user.is_authenticated:
+        user = request.user
+        return render(request, 'profile.html', {'u': user})
+    else:
+        messages.warning(request, 'You need to be logged in to view your profile.')
+        return redirect('login')
 
 # Update profile
 def update_profile(request):
-    return HttpResponse('update profile')
+    if request.method == 'POST':
+        form = forms.ProfileChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully.')
+            return redirect('profile')
+    else:
+        form = forms.ProfileChangeForm(instance=request.user)
+    return render(request, 'update-profile.html', {'form': form.as_div()})
 
 # Delete profile
 def delete_profile(request):
