@@ -84,5 +84,5 @@ def delete_profile(request):
             return redirect('home')
         return render(request, 'delete.html', {})
     else:
-        messages.warning(request, '')
+        messages.warning(request, 'You need to be logged in to delete your profile.')
         return redirect('login')
