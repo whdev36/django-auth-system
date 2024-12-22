@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form action="#" method="post">
+                <h1 class="mb-5">Delete Profile</h1>
+                {% csrf_token %}
+                <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
+                <button class="btn btn-danger w-100 mb-3" type="submit">Delete</button>
+                <p class="text-center">Go back to <a href="{% url 'home' %}">Home</a></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

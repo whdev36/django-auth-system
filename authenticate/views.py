@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from . import models, forms
-from django.contrib.auth.decorators import login_required
+from . import forms
 
 # Home
 def home(request):
@@ -41,11 +39,15 @@ def login_user(request):
 
 # Logout
 def logout_user(request):
-    if request.method == 'POST':
-        logout(request)
-        messages.info(request, 'You have been logged out successfully.')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            logout(request)
+            messages.info(request, 'You have been logged out successfully.')
+            return redirect('login')
+        return render(request, 'logout.html', {})
+    else:
+        messages.warning(request, 'You are not logged in.')
         return redirect('login')
-    return render(request, 'logout.html', {})
 
 # Profile
 def profile(request):
@@ -58,16 +60,29 @@ def profile(request):
 
 # Update profile
 def update_profile(request):
-    if request.method == 'POST':
-        form = forms.ProfileChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your profile has been updated successfully.')
-            return redirect('profile')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = forms.ProfileChangeForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your profile has been updated successfully.')
+                return redirect('profile')
+        else:
+            form = forms.ProfileChangeForm(instance=request.user)
+        return render(request, 'update-profile.html', {'form': form.as_div()})
     else:
-        form = forms.ProfileChangeForm(instance=request.user)
-    return render(request, 'update-profile.html', {'form': form.as_div()})
+        messages.warning(request, 'You need to be logged in to update your profile.')
+        return redirect('home')
 
 # Delete profile
 def delete_profile(request):
-    return HttpResponse('delete profile')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = get_object_or_404(User, pk=request.user.pk)
+            user.delete()
+            messages.success(request, 'Your profile has been deleted successfully.')
+            return redirect('home')
+        return render(request, 'delete.html', {})
+    else:
+        messages.warning(request, '')
+        return redirect('login')
