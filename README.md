@@ -1,6 +1,6 @@
 # Django User Management App
 
-This project is a Django-based application for user management, including features such as registration, login, logout, profile management, and user deletion.
+This project is a Django-based application for user management, including features such as registration, login, logout, profile management, user deletion, and user search.
 
 ## Features
 
@@ -11,6 +11,7 @@ This project is a Django-based application for user management, including featur
 - **User Profile**: Displays the logged-in user's profile.
 - **Update Profile**: Lets users update their profile information.
 - **Delete Profile**: Allows users to delete their accounts.
+- **User Search**: Enables searching for users by username.
 
 ## Requirements
 
@@ -49,6 +50,10 @@ This project is a Django-based application for user management, including featur
 
 6. Open your browser and navigate to `http://127.0.0.1:8000/`.
 
+## Demo
+
+You can check out a live demo of the application at: [https://whdev36.pythonanywhere.com/](https://whdev36.pythonanywhere.com/)
+
 ## Usage
 
 - **Register**: Create a new user account.
@@ -56,17 +61,18 @@ This project is a Django-based application for user management, including featur
 - **Profile**: View and update your profile details.
 - **Logout**: Securely log out of the application.
 - **Delete Account**: Permanently remove your account.
+- **Search Users**: Use the search bar to find users by username.
 
 ## Project Structure
 
 ```
-├── project_name/
+├── config/
 │   ├── __init__.py
 │   ├── settings.py
 │   ├── urls.py
 │   ├── wsgi.py
 │   └── asgi.py
-├── app_name/
+├── authenticate/
 │   ├── migrations/
 │   ├── templates/
 │   ├── static/
