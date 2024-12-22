@@ -7,7 +7,8 @@ from . import models, forms
 
 # Home
 def home(request):
-    return render(request, 'home.html', {})
+    users = User.objects.all()
+    return render(request, 'home.html', {'users': users})
 
 # Register
 def register_user(request):
