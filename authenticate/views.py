@@ -7,7 +7,7 @@ from . import models, forms
 
 # Home
 def home(request):
-    return HttpResponse('home')
+    return render(request, 'home.html', {})
 
 # Register
 def register_user(request):
