@@ -39,7 +39,11 @@ def login_user(request):
 
 # Logout
 def logout_user(request):
-    return HttpResponse('logout')
+    if request.method == 'POST':
+        logout(request)
+        messages.info(request, 'You have been logged out successfully.')
+        return redirect('login')
+    return render(request, 'logout.html', {})
 
 # Profile
 def profile(request):
