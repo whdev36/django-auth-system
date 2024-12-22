@@ -48,7 +48,8 @@ def logout_user(request):
 
 # Profile
 def profile(request):
-    return HttpResponse('profile')
+    user = request.user
+    return render(request, 'profile.html', {'u': user})
 
 # Update profile
 def update_profile(request):
